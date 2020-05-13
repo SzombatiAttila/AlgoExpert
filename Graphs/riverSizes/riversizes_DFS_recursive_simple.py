@@ -1,13 +1,12 @@
 def riversizes_dfs(matrix):
-    index = 2
     rivers = []
 
     def appendRiver(i, j):
-        if i < 0 or i >= len(matrix) or j < 0 or j >= len(matrix[0]) or matrix[i][j] != 1:
-            return 0
+        if 0 <= i < len(matrix) and 0 <= j < len(matrix[0]) and matrix[i][j] == 1:
+            matrix[i][j] += 1
+            return 1 + appendRiver(i - 1, j) + appendRiver(i, j - 1) + appendRiver(i + 1, j) + appendRiver(i, j + 1)
         else:
-            matrix[i][j] = index
-            return 1 + appendRiver(i-1, j) + appendRiver(i, j-1) + appendRiver(i+1, j) + appendRiver(i, j+1)
+            return 0
 
     for i, row in enumerate(matrix):
         for j, _ in enumerate(row):

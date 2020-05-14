@@ -17,12 +17,11 @@ def largestRange(array):
             if 0 == len(ranges):
                 ranges.append(pointsArray)
             else:
-                maxLenInRanges = max([max(i) - min(i) for i in ranges])
-                if maxLenInRanges < max(pointsArray) - min(pointsArray):
+                maxLenInRanges = max([i[-1] - i[0] for i in ranges])
+                if maxLenInRanges < pointsArray[-1] - pointsArray[0]:
                     return pointsArray
 
     for i in range(len(array)):
         if not visitedArray2[i]:
             largestRanges(array, visitedArray2, point=i, pointsArray=[])
     return [ranges[0][0], ranges[0][-1]]
-

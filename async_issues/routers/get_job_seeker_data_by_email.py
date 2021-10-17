@@ -6,12 +6,12 @@ from typing import List
 
 import aiohttp
 
-from async_issues.decorators.semaphore_decorator import request_concurrency_limit_decorator
+from async_issues.decorators.semaphore_decorator import concurrency_limit_decorator
 from async_issues.decorators.time_meas_decorator import measure_time, measure_time_sync
 from async_issues.utils.generate_emails import random_email_generator
 
 
-@request_concurrency_limit_decorator(limit=50)
+@concurrency_limit_decorator(limit=50)
 async def get(session: aiohttp.ClientSession, email: str):
     url = f'http://127.0.0.1:8000/email/{email}'
     print(f"Requesting {url}")

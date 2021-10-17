@@ -1,14 +1,14 @@
 import asyncio
 from functools import wraps
-def request_concurrency_limit_decorator(limit=3):
+def concurrency_limit_decorator(limit=3):
     sem = asyncio.Semaphore(limit)
 
-    def executor(func):
+    def wrapper_function(func):
         @wraps(func)
-        async def wrapper(*args, **kwargs):
+        async def set_max_concurrent_executor(*args, **kwargs):
             async with sem:
                 return await func(*args, **kwargs)
 
-        return wrapper
+        return set_max_concurrent_executor
 
-    return executor
+    return wrapper_function

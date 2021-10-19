@@ -4,33 +4,28 @@ import time
 import requests
 from typing import List
 
-import aiohttp
-
 from async_issues.decorators.semaphore_decorator import concurrency_limit_decorator
 from async_issues.decorators.time_meas_decorator import measure_time, measure_time_sync
 from async_issues.utils.generate_emails import random_email_generator
 
 
-@concurrency_limit_decorator(limit=50)
-async def get(session: aiohttp.ClientSession, email: str):
+@concurrency_limit_decorator(limit=10)
+async def get(email: str):
     url = f'http://127.0.0.1:8000/email/{email}'
     print(f"Requesting {url}")
-    resp = await session.request('GET', url=url)
+    resp = requests.get(url)
     if email[0] in ['a', 'b', 'c', 'd']:
         print(f'The process is heavy, more time needed to the send the response for the email : {email}')
         await asyncio.sleep(5)
-    data = await resp.json()
-    print(f"Received data for {url}")
-    return data
+    print(f"Received data from email : {email} is : {resp.json()}")
 
 
 @measure_time
 async def get_job_seeker_data_by_email(emails: List[str]):
-    async with aiohttp.ClientSession() as session:
-        tasks = []
-        for email in emails:
-            tasks.append(asyncio.ensure_future(get(session=session, email=email)))
-        await asyncio.gather(*tasks)
+    tasks = []
+    for email in emails:
+        tasks.append(asyncio.ensure_future(get(email=email)))
+    await asyncio.gather(*tasks)
 
 
 @measure_time_sync

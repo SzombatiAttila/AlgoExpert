@@ -1,23 +1,21 @@
 # pylint: disable=missing-function-docstring, (missing-module-docstring
 import asyncio
+import requests
 
 import aiohttp
 
 
 async def async_ping_google():
     for _ in range(100):
-        async with aiohttp.ClientSession() as session:
-            async with session.get('https://google.com') as response:
-                await response.text()
-                print(10 * 'X' + '  GOOGLE  ' + 10 * 'X')
-                print('')
+        status_code = requests.get("https://google.com").status_code
+        print(f'google status code is : {status_code}')
 
 async def async_ping_facebook():
-    for _ in range(100):
-        async with aiohttp.ClientSession() as session:
-            async with session.get('https://lensa.com') as response:
-                await response.text()
-                print(10 * 'X' + '  LENSA  ' + 10 * 'X')
+    for i in range(100):
+        status_code = requests.get("https://lensa.com").status_code
+        if i in [20, 30]:
+            await asyncio.sleep(0.5)
+        print(f'lensa status code is : {status_code}')
 
 
 def get_fibonacci_numbers(number=1000):

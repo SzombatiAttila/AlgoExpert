@@ -1,4 +1,4 @@
-import asyncio
+import time
 from typing import Optional
 
 from fastapi import FastAPI
@@ -21,4 +21,7 @@ def read_item(item_id: int, q: Optional[str] = None):
 
 @app.get("/email/{email}")
 def get_user_data_by_email(email: str):
+    if email[0] in ['a', 'b', 'c', 'd']:
+        print(f'The process is heavy, more time needed to the send the response for the email : {email}')
+        time.sleep(5)
     return {f"Job seeker with the email: {email} is": "OK"}

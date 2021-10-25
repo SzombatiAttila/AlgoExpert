@@ -1,7 +1,6 @@
 def all_combination(target: str, word_bank, memo=None):
     """
     Optimized solution to find all of the target word's substrings from a word bank, and return them as a list.
-    With the memo attribute, the time complexity will be reduced from a exponential to a linear
     The word from the word bank can be used as many as possible
     """
     if memo is None:

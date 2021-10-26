@@ -1,4 +1,4 @@
-def riversizes_dfs_optimized(matrix):
+def river_sizes_dfs_optimized(matrix):
     rivers = []
     for i in range(len(matrix)):
         for j in range(len(matrix[i])):
